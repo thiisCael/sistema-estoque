@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Estoque</title>
+  <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <h1>📦 Controle de Estoque</h1>
+    <button id="sairBtn" class="btn-danger">Sair</button>
+  </aside>
+
+  <main class="main-content">
+    <!-- DASHBOARD -->
+    <section class="dashboard">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Total de Produtos</span>
+          <span class="card-icon">📦</span>
+        </div>
+        <div class="card-value" id="totalProdutos">0</div>
+        <div class="card-footer">Produtos cadastrados</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Estoque Baixo</span>
+          <span class="card-icon">⚠️</span>
+        </div>
+        <div class="card-value" id="estoqueBaixo">0</div>
+        <div class="card-footer">Produtos em alerta</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Movimentações Hoje</span>
+          <span class="card-icon">📊</span>
+        </div>
+        <div class="card-value" id="movimentacoesHoje">0</div>
+        <div class="card-footer">Entradas e saídas</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Estoque Total</span>
+          <span class="card-icon">📈</span>
+        </div>
+        <div class="card-value" id="estoqueTotal">0</div>
+        <div class="card-footer">Unidades no estoque</div>
+      </div>
+    </section>
+
+    <!-- FILTROS -->
+    <section class="filters">
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label>🔍 Buscar Produto</label>
+          <input type="text" id="filtroNome" placeholder="Digite o nome...">
+        </div>
+        <div class="filter-group">
+          <label>📁 Categoria</label>
+          <select id="filtroCategoria">
+            <option value="">Todas as categorias</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>⚠️ Status do Estoque</label>
+          <select id="filtroStatus">
+            <option value="">Todos</option>
+            <option value="critico">Estoque Crítico</option>
+            <option value="baixo">Estoque Baixo</option>
+            <option value="ok">Estoque OK</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUTOS -->
+    <section class="produtos-section">
+      <h2>Produtos</h2>
+      <table id="tabela-produtos">
+        <thead>
+          <tr>
+            <th onclick="ordenarTabela('nome')">Nome ↕️</th>
+            <th onclick="ordenarTabela('categoria')">Categoria ↕️</th>
+            <th>Unidade</th>
+            <th onclick="ordenarTabela('estoque_minimo')">Est. Mínimo ↕️</th>
+            <th onclick="ordenarTabela('saldo')">Saldo ↕️</th>
+            <th>Status</th>
+            <th>Última Saída</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- MOVIMENTAÇÃO -->
+    <section class="movimentacao-section">
+      <h3>Registrar Movimentação</h3>
+      <form id="movForm">
+        <div class="form-group">
+          <label>Produto</label>
+          <select id="produto_id" required></select>
+        </div>
+
+        <div class="form-group">
+          <label>Tipo</label>
+          <select id="tipo" required>
+            <option value="">Selecione</option>
+            <option value="ENTRADA">⬆️ Entrada</option>
+            <option value="SAIDA">⬇️ Saída</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Quantidade</label>
+          <input type="number" id="quantidade" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label>Destinatário (em caso de saída)</label>
+          <input type="text" id="destinatario" placeholder="Ex: João da limpeza">
+        </div>
+
+        <button type="submit" class="btn-primary">Registrar</button>
+      </form>
+      <p id="mensagem"></p>
+    </section>
+
+    <!-- HISTÓRICO -->
+    <section class="historico-section">
+      <h2>Histórico de Movimentações</h2>
+      
+      <div class="filters-grid" style="margin-bottom: 1.5rem;">
+        <div class="filter-group">
+          <label>📅 Data Inicial</label>
+          <input type="date" id="dataInicio">
+        </div>
+        <div class="filter-group">
+          <label>📅 Data Final</label>
+          <input type="date" id="dataFim">
+        </div>
+        <div class="filter-group">
+          <label>📦 Produto</label>
+          <select id="filtroProdutoHistorico">
+            <option value="">Todos os produtos</option>
+          </select>
+        </div>
+      </div>
+
+      <table id="tabela-historico">
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>Produto</th>
+            <th>Tipo</th>
+            <th>Quantidade</th>
+            <th>Destinatário</th>
+            <th>Registrado por</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script type="module" src="../js/index.js"></script>
+</body>
+</html>
